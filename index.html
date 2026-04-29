@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dental Cost Atlas | Compare Dental Treatment Prices</title>
+  <meta name="description" content="Compare estimated dental treatment prices in Finland, Estonia, Turkey and Thailand. Calculate implant, crown, veneer and whitening costs before choosing a clinic." />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f8fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      color: white;
+      padding: 56px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+    }
+    header p {
+      max-width: 720px;
+      margin: 0 auto 24px;
+      font-size: 18px;
+    }
+    .cta {
+      display: inline-block;
+      background: white;
+      color: #0f766e;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      margin-bottom: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    button {
+      background: #0f766e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #ecfdf5;
+      border-left: 5px solid #0f766e;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+    th {
+      background: #f3f4f6;
+    }
+    .muted {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dental Cost Atlas</h1>
+    <p>Compare estimated dental treatment prices across Finland, Estonia, Turkey and Thailand before choosing where to get treatment.</p>
+    <a class="cta" href="#calculator">Compare Prices</a>
+  </header>
+
+  <main>
+    <section id="calculator" class="card">
+      <h2>Dental Price Calculator</h2>
+      <p class="muted">These are sample estimates. Replace them later with verified clinic data.</p>
+
+      <div class="grid">
+        <div>
+          <label for="procedure">Treatment</label>
+          <select id="procedure">
+            <option value="implant">Dental implant</option>
+            <option value="crown">Dental crown</option>
+            <option value="veneer">Veneer</option>
+            <option value="whitening">Teeth whitening</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="country">Country</label>
+          <select id="country">
+            <option value="finland">Finland</option>
+            <option value="estonia">Estonia</option>
+            <option value="turkey">Turkey</option>
+            <option value="thailand">Thailand</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="quantity">Quantity</label>
+          <input id="quantity" type="number" value="1" min="1" />
+        </div>
+      </div>
+
+      <br />
+      <button onclick="calculatePrice()">Calculate estimated cost</button>
+      <div id="result" class="result" style="display:none;"></div>
+    </section>
+
+    <section class="card">
+      <h2>Sample Price Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Treatment</th>
+            <th>Finland</th>
+            <th>Estonia</th>
+            <th>Turkey</th>
+            <th>Thailand</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Dental implant</td><td>€2,000</td><td>€1,200</td><td>€700</td><td>€800</td></tr>
+          <tr><td>Dental crown</td><td>€900</td><td>€500</td><td>€250</td><td>€300</td></tr>
+          <tr><td>Veneer</td><td>€850</td><td>€450</td><td>€220</td><td>€280</td></tr>
+          <tr><td>Whitening</td><td>€350</td><td>€250</td><td>€150</td><td>€180</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Get Clinic Recommendations</h2>
+      <p>Collect patient leads here. Later this can send data to Google Sheets, Airtable or your CRM.</p>
+      <form onsubmit="submitLead(event)">
+        <div class="grid">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" required placeholder="Your name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" required placeholder="you@example.com" />
+          </div>
+        </div>
+        <br />
+        <label for="message">What treatment are you considering?</label>
+        <textarea id="message" rows="4" placeholder="Example: I need 2 implants and want to compare Estonia and Turkey."></textarea>
+        <br /><br />
+        <button type="submit">Request recommendation</button>
+      </form>
+      <p id="leadMessage" class="muted"></p>
+    </section>
+
+    <section class="card">
+      <h2>SEO Pages to Build Next</h2>
+      <p>Start with these pages because they match what people search for:</p>
+      <ul>
+        <li>Dental implant cost in Finland</li>
+        <li>Dental implant cost in Estonia</li>
+        <li>Dental implant cost in Turkey</li>
+        <li>Dental implant cost in Thailand</li>
+        <li>Best country for dental implants in Europe</li>
+        <li>Turkey vs Estonia dental implants</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Dental Cost Atlas MVP. Price estimates are for research only and should be verified with clinics.
+  </footer>
+
+  <script>
+    const prices = {
+      implant: { finland: 2000, estonia: 1200, turkey: 700, thailand: 800 },
+      crown: { finland: 900, estonia: 500, turkey: 250, thailand: 300 },
+      veneer: { finland: 850, estonia: 450, turkey: 220, thailand: 280 },
+      whitening: { finland: 350, estonia: 250, turkey: 150, thailand: 180 }
+    };
+
+    const names = {
+      implant: "dental implant",
+      crown: "dental crown",
+      veneer: "veneer",
+      whitening: "teeth whitening",
+      finland: "Finland",
+      estonia: "Estonia",
+      turkey: "Turkey",
+      thailand: "Thailand"
+    };
+
+    function calculatePrice() {
+      const procedure = document.getElementById("procedure").value;
+      const country = document.getElementById("country").value;
+      const quantity = Number(document.getElementById("quantity").value || 1);
+      const total = prices[procedure][country] * quantity;
+
+      const result = document.getElementById("result");
+      result.style.display = "block";
+      result.innerHTML = `Estimated cost for ${quantity} ${names[procedure]} treatment(s) in ${names[country]}: €${total.toLocaleString()}`;
+    }
+
+    async function submitLead(event) {
+      event.preventDefault();
+
+      const lead = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value,
+        source: "Dental Cost Atlas MVP"
+      };
+
+      const status = document.getElementById("leadMessage");
+      status.textContent = "Sending...";
+
+      try {
+        const response = await fetch("/api/lead.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(lead)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Something went wrong");
+        }
+
+        status.textContent = "Thank you. Your request has been received.";
+        event.target.reset();
+      } catch (error) {
+        status.textContent = "Sorry, the form could not be sent. Please try again.";
+      }
+    }
+  </script>
+</body>
+</html>
